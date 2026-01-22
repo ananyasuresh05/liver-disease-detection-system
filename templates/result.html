@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liver Function Analysis Report - MediPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* MediPro Refined Palette */
+            --medi-dark: #002d24;      /* Brand Deep Green */
+            --medi-accent: #f99d78;    /* Brand Peach */
+            --medi-bg-light: #f4f7f6;  /* Clinical Light Background */
+            --medi-text-main: #333333; /* Dark Grey for Readability */
+            --medi-text-muted: #6c757d;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--medi-bg-light);
+            color: var(--medi-text-main);
+            padding: 50px 20px;
+            margin: 0;
+        }
+
+        .report-container {
+            background: var(--white);
+            max-width: 850px;
+            margin: auto;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #f1f3f5;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .brand-logo h2 {
+            color: var(--medi-dark);
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-logo span {
+            color: var(--medi-accent);
+        }
+
+        .report-meta {
+            text-align: right;
+            color: var(--medi-text-muted);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        h3 {
+            color: var(--medi-dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 40px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3::before {
+            content: "";
+            width: 4px;
+            height: 24px;
+            background: var(--medi-accent);
+            border-radius: 4px;
+        }
+
+        /* Patient & Lab Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #f1f3f5;
+        }
+
+        th {
+            background: #fafbfc;
+            color: var(--medi-dark);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        td {
+            font-size: 0.95rem;
+        }
+
+        .test-name { font-weight: 500; color: #495057; }
+        .test-result { font-weight: 700; color: var(--medi-dark); }
+        .reference-range { color: var(--medi-text-muted); font-size: 0.85rem; }
+
+        /* Interpretation List */
+        .interpretation-box {
+            background: #fdfaf9; /* Extremely subtle peach tint */
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--medi-accent);
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: none;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--medi-accent);
+            font-weight: bold;
+            position: absolute;
+            left: -5px;
+        }
+
+        /* AI Results & Risk */
+        .diagnostic-summary {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .Low { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .Moderate { background: #fffde7; color: #f57f17; border: 1px solid #fff9c4; }
+        .High { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
+        .Severe { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        button {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            color: var(--medi-dark);
+            border: 2px solid var(--medi-dark);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-print {
+            background: var(--medi-dark);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-print:hover { background: #004d3d; border-color: #004d3d; }
+        .btn-back:hover { border-color: var(--medi-accent); color: var(--medi-accent); }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .report-container { box-shadow: none; border: none; padding: 20px; }
+            .btn-group { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="report-container">
+
+    <div class="report-header">
+        <div class="brand-logo">
+            <h2>Medi<span>Pro</span></h2>
+            <p style="margin: 5px 0 0 0; color: var(--medi-text-muted); font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;">
+                Liver Disease Predictive Diagnostics Unit
+            </p>
+        </div>
+        <div class="report-meta">
+            <p><strong>Report ID:</strong> LFX-{{ range(1000, 9999) | random }}</p>
+            <p><strong>Date:</strong> {{ report_time }}</p>
+        </div>
+    </div>
+
+    <h3>Patient Information</h3>
+    <table>
+        <tr>
+            <th width="25%">Age</th>
+            <td>{{ result.Age }} Years</td>
+            <th width="25%">Gender</th>
+            <td>{{ result.Gender }}</td>
+        </tr>
+    </table>
+
+    <h3>Laboratory Findings</h3>
+    <table>
+        <thead>
+            <tr>
+                <th width="45%">Biochemical Marker</th>
+                <th width="20%">Result</th>
+                <th width="35%">Reference Range</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="test-name">Total Bilirubin</td>
+                <td class="test-result">{{ data.Total_Bilirubin }}</td>
+                <td class="reference-range">0.3 – 1.2 mg/dL</td>
+            </tr>
+            <tr>
+                <td class="test-name">Direct Bilirubin</td>
+                <td class="test-result">{{ data.Direct_Bilirubin }}</td>
+                <td class="reference-range">0.1 – 0.4 mg/dL</td>
+            </tr>
+            <tr>
+                <td class="test-name">Alkaline Phosphatase (ALP)</td>
+                <td class="test-result">{{ data.Alkaline_Phosphotase }}</td>
+                <td class="reference-range">44 – 120 U/L</td>
+            </tr>
+            <tr>
+                <td class="test-name">ALT (SGPT)</td>
+                <td class="test-result">{{ data.Alamine_Aminotransferase }}</td>
+                <td class="reference-range">7 – 40 U/L</td>
+            </tr>
+            <tr>
+                <td class="test-name">AST (SGOT)</td>
+                <td class="test-result">{{ data.Aspartate_Aminotransferase }}</td>
+                <td class="reference-range">10 – 40 U/L</td>
+            </tr>
+            <tr>
+                <td class="test-name">Total Proteins</td>
+                <td class="test-result">{{ data.Total_Protiens }}</td>
+                <td class="reference-range">6.0 – 8.3 g/dL</td>
+            </tr>
+            <tr>
+                <td class="test-name">Albumin</td>
+                <td class="test-result">{{ data.Albumin }}</td>
+                <td class="reference-range">3.5 – 5.0 g/dL</td>
+            </tr>
+            <tr>
+                <td class="test-name">A/G Ratio</td>
+                <td class="test-result">{{ data.Albumin_and_Globulin_Ratio }}</td>
+                <td class="reference-range">1.0 – 2.5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Clinical Interpretation</h3>
+    <div class="interpretation-box">
+        <ul>
+            {% if data.Total_Bilirubin > 1.2 %}
+            <li>Elevated total bilirubin levels may indicate biliary obstruction or hepatic inflammation.</li>
+            {% endif %}
+
+            {% if data.Alamine_Aminotransferase > 40 or data.Aspartate_Aminotransferase > 40 %}
+            <li>Raised ALT/AST markers suggest active hepatocellular injury.</li>
+            {% endif %}
+
+            {% if data.Albumin < 3.5 %}
+            <li>Hypoalbuminemia detected, potentially indicating chronic synthetic dysfunction.</li>
+            {% endif %}
+
+            {% if
+                data.Total_Bilirubin <= 1.2 and
+                data.Alamine_Aminotransferase <= 40 and
+                data.Aspartate_Aminotransferase <= 40 and
+                data.Albumin >= 3.5
+            %}
+            <li>Primary hepatic markers appear within expected physiological ranges.</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="diagnostic-summary">
+        <h3 style="margin-top: 0; justify-content: center;">AI Analysis Conclusion</h3>
+        <p style="margin: 10px 0; font-size: 1.1rem;">
+            Predicted Condition: <strong>{{ result.Predicted_Class }}</strong>
+        </p>
+        <p style="color: var(--medi-text-muted); font-size: 0.85rem;">
+            Confidence Level: {{ result.Probability }}
+        </p>
+
+        <div class="risk-badge {{ result.Risk_Level.split()[0] }}">
+            Clinical Status: {{ result.Risk_Level }}
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn-print" onclick="window.print()">Download Report (PDF)</button>
+        <button class="btn-back" onclick="window.location.href='/'">New Assessment</button>
+    </div>
+
+    <p style="text-align: center; font-size: 0.7rem; color: #adb5bd; margin-top: 30px;">
+        Disclaimer: This AI-generated report is intended for diagnostic support. Please consult a hepatologist for clinical validation.
+    </p>
+
+</div>
+</body>
+</html>

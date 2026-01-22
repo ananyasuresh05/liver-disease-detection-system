@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPro - Liver Assessment Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary-dark: #002d24;    /* MediPro Forest Green */
+            --color-accent-peach: #f99d78;    /* MediPro Coral */
+            --color-bg-light: #f4f7f6;        /* Light clinical background */
+            --color-text-dark: #333333;
+            --color-text-muted: #6c757d;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-primary-dark);
+            margin: 0;
+            color: white;
+        }
+
+        /* Hero Header matching MediPro site */
+        .hero-header {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--color-primary-dark);
+        }
+
+        .hero-header h4 {
+            color: var(--color-accent-peach);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .hero-header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .hero-header p {
+            color: #a6b1b0;
+            max-width: 600px;
+            margin: 15px auto 0;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 850px;
+            margin: -30px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* Form Card Layout from Kidney Image */
+        .section-card {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            color: var(--color-text-dark);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .number-circle {
+            background: var(--color-accent-peach);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+            color: var(--color-primary-dark);
+        }
+
+        /* Input Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-primary-dark);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--color-text-dark);
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--color-accent-peach);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(249, 157, 120, 0.1);
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-predict {
+            background: transparent;
+            color: var(--color-accent-peach);
+            border: 2px solid var(--color-accent-peach);
+            padding: 16px 50px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-predict:hover {
+            background: var(--color-accent-peach);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(249, 157, 120, 0.3);
+        }
+
+        .footer-disclaimer {
+            color: #a6b1b0;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .hero-header h1 { font-size: 1.8rem; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-header">
+        <h4>MediPro Diagnostics</h4>
+        <h1>Liver Function Assessment</h1>
+        <p>Advanced diagnostic integration for hepatic screening and predictive analytics.</p>
+    </div>
+
+    <div class="container">
+        <form action="/predict" method="POST">
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="number-circle">1</div>
+                    <h2>Patient Details</h2>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Age (Years)</label>
+                        <input type="number" name="Age" placeholder="e.g. 45" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="Gender">
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="number-circle">2</div>
+                    <h2>Biochemical Markers</h2>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Total Bilirubin</label>
+                        <input type="number" step="any" name="Total_Bilirubin" placeholder="mg/dL" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Direct Bilirubin</label>
+                        <input type="number" step="any" name="Direct_Bilirubin" placeholder="mg/dL" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Alkaline Phosphatase</label>
+                        <input type="number" step="any" name="Alkaline_Phosphotase" placeholder="U/L" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ALT (SGPT)</label>
+                        <input type="number" step="any" name="Alamine_Aminotransferase" placeholder="U/L" required>
+                    </div>
+                    <div class="form-group">
+                        <label>AST (SGOT)</label>
+                        <input type="number" step="any" name="Aspartate_Aminotransferase" placeholder="U/L" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="number-circle">3</div>
+                    <h2>Protein Synthesis Evaluation</h2>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Total Proteins</label>
+                        <input type="number" step="any" name="Total_Protiens" placeholder="g/dL" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Albumin</label>
+                        <input type="number" step="any" name="Albumin" placeholder="g/dL" required>
+                    </div>
+                    <div class="form-group">
+                        <label>A/G Ratio</label>
+                        <input type="number" step="any" name="Albumin_and_Globulin_Ratio" placeholder="Ratio" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-container">
+                <button type="submit" class="btn-predict">
+                    Generate Analysis Report →
+                </button>
+            </div>
+        </form>
+
+        <div class="footer-disclaimer">
+            <strong>Warning:</strong> For clinical use only. This tool provides predictive insights based on laboratory markers. Professional medical validation is required.
+        </div>
+    </div>
+
+</body>
+</html>
